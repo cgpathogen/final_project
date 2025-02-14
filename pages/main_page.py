@@ -8,6 +8,10 @@ class Main_page(Base):
         self.wait = WebDriverWait(self.driver, 10, poll_frequency=1)
 
 
+    # main url:
+
+    main_url = "https://legendbaikal.ru/"
+
     # user data:
 
     user_login = "acrocanthbm@gmail.com"
@@ -68,6 +72,7 @@ class Main_page(Base):
 
 
     def authorization(self):
+        self.driver.get(url=self.main_url)
         self.click_enter_button()
         self.send_login()
         self.send_password()
