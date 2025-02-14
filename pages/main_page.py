@@ -54,18 +54,22 @@ class Main_page(Base):
 
     def click_enter_button(self):
         self.get_enter_btn().click()
+        print("click enter button")
 
 
     def send_login(self):
         self.get_log_in_field().send_keys(self.user_login)
+        print('login sent')
 
 
     def send_password(self):
         self.get_password_field().send_keys(self.user_password)
+        print("password sent")
 
 
     def click_login_button(self):
         self.get_login_popup_btn().click()
+        print("authorization passed")
 
 
     # methods:
