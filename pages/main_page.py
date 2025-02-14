@@ -6,6 +6,14 @@ class Main_page(Base):
     def __init__(self, driver):
         super().__init__(driver)
         self.wait = WebDriverWait(self.driver, 10, poll_frequency=1)
+
+
+    # user data:
+
+    user_login = "acrocanthbm@gmail.com"
+    user_password = "QAwErty123"
+
+
     # x-path locators:
 
     enter_button = ("xpath","//*[@id='i-5-bitrix-system-auth-form-panel-iIjGFB3HxHmm']/div")
@@ -37,8 +45,30 @@ class Main_page(Base):
         return self.wait.until(EC.element_to_be_clickable(self.login_popup_btn))
 
 
-
     # actions
 
 
+    def click_enter_button(self):
+        self.get_enter_btn().click()
 
+
+    def send_login(self):
+        self.get_log_in_field().send_keys(self.user_login)
+
+
+    def send_password(self):
+        self.get_password_field().send_keys(self.user_password)
+
+
+    def click_login_button(self):
+        self.get_login_popup_btn().click()
+
+
+    # methods:
+
+
+    def authorization(self):
+        self.click_enter_button()
+        self.send_login()
+        self.send_password()
+        self.click_login_button()
