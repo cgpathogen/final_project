@@ -18,6 +18,7 @@ def test_buy_product():
 
     mp = Main_page(driver)
     mp.go_to_main_url()
+    mp.close_location_popup()
     mp.authorization()
 
     time.sleep(3)
