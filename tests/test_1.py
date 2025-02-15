@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.options import Options
 
 from pages.main_page import Main_page
 
-def test_launch_browser():
+def test_buy_product():
     options = Options()
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--useragent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
