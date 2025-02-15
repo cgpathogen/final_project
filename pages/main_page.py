@@ -12,7 +12,7 @@ class Main_page(Base):
 
     # main url:
 
-    main_url = "https://legendbaikal.ru/"
+
 
     # user data:
 
@@ -155,7 +155,6 @@ class Main_page(Base):
 
 
     def authorization(self):
-        self.driver.get(url=self.main_url)
         self.hide_location_popup()
         self.get_current_url()
         self.click_enter_button()
