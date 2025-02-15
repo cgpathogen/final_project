@@ -55,7 +55,7 @@ class Main_page(Base):
 
 
     def get_catalog_link(self):
-        return self.wait.until(EC.element_to_be_clickable(self.catalog))
+        return self.wait.until(EC.visibility_of_element_located(self.catalog))
 
 
     def get_submenu(self):
@@ -87,6 +87,7 @@ class Main_page(Base):
     def click_login_button(self):
         self.get_login_popup_btn().click()
         print("authorization passed")
+
 
     def hover_catalog(self):
         # Ждем, пока элемент каталога станет видимым
