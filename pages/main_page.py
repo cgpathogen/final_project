@@ -121,6 +121,7 @@ class Main_page(Base):
 
     def authorization(self):
         self.driver.get(url=self.main_url)
+        self.get_current_url()
         self.click_enter_button()
         self.send_login()
         self.send_password()
