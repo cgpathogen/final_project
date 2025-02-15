@@ -154,8 +154,11 @@ class Main_page(Base):
     # methods:
 
 
-    def authorization(self):
+    def close_location_popup(self): # закрываем модальное окно выбора локации
         self.hide_location_popup()
+
+
+    def authorization(self): # авторизация
         self.get_current_url()
         self.click_enter_button()
         self.send_login()
