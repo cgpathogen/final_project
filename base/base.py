@@ -30,7 +30,7 @@ class Base:
 
 
     def get_current_url(self):
-        print(f"\n{self.driver.current_url}")
+        print(f"\nCurrent URL: {self.driver.current_url}")
 
 
     def hide_location_popup(self):
