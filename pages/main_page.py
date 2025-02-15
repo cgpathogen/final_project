@@ -89,12 +89,17 @@ class Main_page(Base):
         print("authorization passed")
 
     def hover_catalog(self):
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", self.get_catalog_link())
-        self.wait.until(EC.visibility_of(self.get_catalog_link()))
-        self.action.move_to_element(self.get_catalog_link()).perform()
+        # Ждем, пока элемент каталога станет видимым
+        catalog_link = self.wait.until(EC.visibility_of_element_located(self.catalog))
 
-        self.wait.until(EC.visibility_of(self.get_catalog_sublink()))
-        self.action.move_to_element(self.get_catalog_sublink()).click().perform()
+        # Наводим курсор на элемент каталога
+        self.action.move_to_element(catalog_link).perform()
+
+        # Ждем, пока подкатегория станет видимой
+        catalog_sublink = self.wait.until(EC.visibility_of_element_located(self.catalog_sublink))
+
+        # Кликаем на подкатегорию
+        catalog_sublink.click()
         print("hover and click on catalog sublink")
 
 
