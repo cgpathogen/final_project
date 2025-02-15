@@ -1,5 +1,4 @@
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
 class Base:
@@ -16,6 +15,3 @@ class Base:
 
     def get_current_url(self):
         print(f"\nCurrent URL: {self.driver.current_url}")
-
-
-
