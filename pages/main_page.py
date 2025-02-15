@@ -27,6 +27,10 @@ class Main_page(Base):
     log_in_field = ("xpath", '//*[@id="USER_LOGIN_2"]')
     password_field = ("xpath", '//*[@id="USER_PASSWORD_2"]')
     login_popup_btn = ("xpath", '//*[@id="i-1-bitrix-system-auth-authorize-popup-2-0weid03RvzKY"]/form/div[3]/input')
+    pagetitle = ("xpath",'//*[@id="pagetitle"]')
+
+    # main navbar x-paths
+
     catalog = ("xpath", '//div[@class="intec-grid-item-auto menu-item menu-item-section intec-cl-background-light-hover"]')
     catalog_submenu = ("xpath", '//*[@id="i-8-bitrix-menu-horizontal-1-XEVOpkwAkIZ0"]/div[2]/div/div/div[1]/div[1]/div')
     catalog_sublink = ("xpath", '//*[@id="i-8-bitrix-menu-horizontal-1-XEVOpkwAkIZ0"]/div[2]/div/div/div[1]/div[1]/div/div/div[1]/div[1]/div/div[1]/div/a')
@@ -52,6 +56,10 @@ class Main_page(Base):
 
     def get_login_popup_btn(self):
         return self.wait.until(EC.element_to_be_clickable(self.login_popup_btn))
+
+
+    def get_pagetitle(self):
+        return self.wait.until(EC.visibility_of_element_located(self.pagetitle))
 
 
     def get_catalog_link(self):
@@ -89,6 +97,10 @@ class Main_page(Base):
         print("authorization passed")
 
 
+    def assert_pagetitle_reach(self):
+        assert self.get_pagetitle().text == 'Личный кабинет пользователя'
+
+
     def hover_catalog(self):
         # Ждем, пока элемент каталога станет видимым
         catalog_link = self.wait.until(EC.visibility_of_element_located(self.catalog))
@@ -113,4 +125,5 @@ class Main_page(Base):
         self.send_login()
         self.send_password()
         self.click_login_button()
+        self.assert_pagetitle_reach()
         self.hover_catalog()
