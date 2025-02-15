@@ -17,6 +17,7 @@ def test_buy_product():
     driver = webdriver.Chrome(options=options,service=service)
 
     mp = Main_page(driver)
+    mp.go_to_main_url()
     mp.authorization()
 
     time.sleep(3)
