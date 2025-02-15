@@ -10,10 +10,6 @@ class Main_page(Base):
         self.action = ActionChains(self.driver)
 
 
-    # main url:
-
-
-
     # user data:
 
     user_login = "acrocanthbm@gmail.com"
