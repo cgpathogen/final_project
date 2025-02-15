@@ -39,3 +39,15 @@ class Catalogue(Base):
     sort_btn = ("xpath","(//div[@class='catalog-panel-sort'])[1]")
     sort_options_block = ("xpath", "//div[@class='catalog-panel-sort-items']")
     sort_option = ("xpath", "(//div[@class='catalog-panel-sort-item'])[5]")
+
+    ## items
+
+    item_1 = ("xpath","(//div[@class='catalog-section-item-wrapper'])[1]")
+    item_1_plus = ("xpath", "(//a[@class='intec-ui-part-increment'])[1]")
+    item_1_buy = ("xpath","(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])[1]")
+    item_2 = ("xpath","(//div[@class='catalog-section-item-wrapper'])[2]")
+    item_2_plus = ("xpath", "(//a[@class='intec-ui-part-increment'])[2]")
+    item_2_buy = ("xpath","(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])[2]")
+
+    ## cart
+
