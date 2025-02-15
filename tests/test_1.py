@@ -16,7 +16,7 @@ def test_buy_product():
     service = Service(executable_path=ChromeDriverManager().install())
     driver = webdriver.Chrome(options=options,service=service)
 
-    mp = Main_page(driver)
+    mp = Main_page(driver) # main page
     mp.go_to_main_url()
     mp.close_location_popup()
     mp.authorization()
