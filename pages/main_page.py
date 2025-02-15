@@ -27,8 +27,9 @@ class Main_page(Base):
     log_in_field = ("xpath", '//*[@id="USER_LOGIN_2"]')
     password_field = ("xpath", '//*[@id="USER_PASSWORD_2"]')
     login_popup_btn = ("xpath", '//*[@id="i-1-bitrix-system-auth-authorize-popup-2-0weid03RvzKY"]/form/div[3]/input')
-    catalog = ("xpath", '//*[@id="i-8-bitrix-menu-horizontal-1-XEVOpkwAkIZ0"]/div[2]/div/div/div[1]/div[1]/a')
-    catalog_sublink = ("xpath", '//*[@id="i-8-bitrix-menu-horizontal-1-XEVOpkwAkIZ0"]/div[2]/div/div/div[1]/div[1]/a/div[2]')
+    catalog = ("xpath", '//div[@class="intec-grid-item-auto menu-item menu-item-section intec-cl-background-light-hover"]')
+    catalog_submenu = ("xpath", '//*[@id="i-8-bitrix-menu-horizontal-1-XEVOpkwAkIZ0"]/div[2]/div/div/div[1]/div[1]/div')
+    catalog_sublink = ("xpath", '//*[@id="i-8-bitrix-menu-horizontal-1-XEVOpkwAkIZ0"]/div[2]/div/div/div[1]/div[1]/div/div/div[1]/div[1]/div/div[1]/div/a')
 
 
     # getters
@@ -54,7 +55,12 @@ class Main_page(Base):
 
 
     def get_catalog_link(self):
-        return self.wait.until(EC.visibility_of_element_located(self.catalog))
+        return self.wait.until(EC.element_to_be_clickable(self.catalog))
+
+
+    def get_submenu(self):
+        return self.wait.until(EC.visibility_of_element_located(self.catalog_submenu))
+
 
     def get_catalog_sublink(self):
         return self.wait.until(EC.visibility_of_element_located(self.catalog_sublink))
@@ -82,9 +88,14 @@ class Main_page(Base):
         self.get_login_popup_btn().click()
         print("authorization passed")
 
-
     def hover_catalog(self):
-        self.action.move_to_element(self.get_catalog_link()).click(self.get_catalog_sublink()).perform()
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", self.get_catalog_link())
+        self.wait.until(EC.visibility_of(self.get_catalog_link()))
+        self.action.move_to_element(self.get_catalog_link()).perform()
+
+        self.wait.until(EC.visibility_of(self.get_catalog_sublink()))
+        self.action.move_to_element(self.get_catalog_sublink()).click().perform()
+        print("hover and click on catalog sublink")
 
 
     # methods:
@@ -96,3 +107,4 @@ class Main_page(Base):
         self.send_login()
         self.send_password()
         self.click_login_button()
+        self.hover_catalog()
