@@ -42,9 +42,9 @@ class Catalogue(Base):
 
     ## items
 
-    item = ("xpath","(//div[@class='catalog-section-item-wrapper'])[1]")
-    item_plus = ("xpath", "(//a[@class='intec-ui-part-increment'])[1]")
-    item_buy = ("xpath","(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])[1]")
+    item = ("xpath","(//div[@class='catalog-section-item-wrapper'])")
+    item_plus = ("xpath", "(//a[@class='intec-ui-part-increment'])")
+    item_buy = ("xpath","(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])")
 
 
     ## cart
@@ -54,3 +54,105 @@ class Catalogue(Base):
     cart_hover_item_text = ("xpath", "//a[@class='sale-basket-small-product-name intec-cl-text-hover']")
     cart_hover_item_price = ("xpath", "//span[@class='sale-basket-small-product-new-price']")
     cart_hover_go_to_cart_page = ("xpath", "(//a[@class='sale-basket-small-footer-order-button intec-ui intec-ui-control-button intec-ui-mod-block intec-ui-scheme-current intec-ui-size-2'])[1]")
+
+
+    # getters
+
+    ## filters
+
+    def get_price_filter(self):
+        return self.wait.until(EC.element_to_be_clickable(self.price_filter))
+
+
+    def get_left_slider(self):
+        return self.wait.until(EC.element_to_be_clickable(self.left_slider))
+
+
+    def get_right_slider(self):
+        return self.wait.until(EC.element_to_be_clickable(self.right_slider))
+
+
+    def get_size_filter(self):
+        return self.wait.until(EC.element_to_be_clickable(self.size_filter))
+
+
+    def get_size_2(self):
+        return self.wait.until(EC.element_to_be_clickable(self.size_2))
+
+
+    def get_size_3(self):
+        return self.wait.until(EC.element_to_be_clickable(self.size_3))
+
+
+    ## filter buttons
+
+
+    def get_set_filter_btn(self):
+        return self.wait.until(EC.element_to_be_clickable(self.set_filter_btn))
+
+
+    def get_reset_filter_btn(self):
+        return self.wait.until(EC.element_to_be_clickable(self.reset_filter_btn))
+
+
+    ## smart filter
+
+
+    def get_smart_filter(self):
+       return self.wait.until(EC.visibility_of_element_located(self.smart_filter))
+
+
+    def get_show_results(self):
+        return self.wait.until(EC.element_to_be_clickable(self.show_results))
+
+
+    ## sort
+
+
+    def get_sort_btn(self):
+        return self.wait.until(EC.element_to_be_clickable(self.sort_btn))
+
+
+    def get_sort_options_block(self):
+        return self.wait.until(EC.visibility_of_element_located(self.sort_options_block))
+
+
+    def get_sort_option(self):
+        return self.wait.until(EC.element_to_be_clickable(self.sort_option))
+
+
+    ## itmes
+
+    def get_item(self):
+        return self.wait.until(EC.element_to_be_clickable(self.item))
+
+
+    def get_item_plus(self):
+        return self.wait.until(EC.element_to_be_clickable(self.item_plus))
+
+
+    def get_item_buy(self):
+        return self.wait.until(EC.element_to_be_clickable(self.item_buy))
+
+
+    ## cart
+
+
+    def get_cart(self):
+        return self.wait.until(EC.element_to_be_clickable(self.cart))
+
+
+    def get_cart_hover_filed(self):
+        return self.wait.until(EC.visibility_of_element_located(self.cart_hover_field))
+
+
+    def get_cart_hover_item_text(self):
+        return self.wait.until(EC.visibility_of_element_located(self.cart_hover_item_text))
+
+
+    def get_cart_hover_item_price(self):
+        return self.wait.until(EC.visibility_of_element_located(self.cart_hover_item_price))
+
+
+    def get_cart_hover_go_to_cart_page(self):
+        return self.wait.until(EC.element_to_be_clickable(self.get_cart_hover_go_to_cart_page()))
