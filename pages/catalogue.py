@@ -158,7 +158,7 @@ class Catalogue(Base):
         return self.wait.until(EC.element_to_be_clickable(self.get_cart_hover_go_to_cart_page()))
 
 
-    # methods
+    # actions
 
 
     ## filters
@@ -167,3 +167,16 @@ class Catalogue(Base):
         self.get_price_filter().click()
         self.action.drag_and_drop_by_offset(self.get_left_slider(),50,0).perform()
         self.action.drag_and_drop_by_offset(self.get_right_slider(),-80,0).perform()
+
+
+    def filter_by_size(self):
+        self.get_size_filter().click()
+        self.get_size_2().click()
+        self.get_size_3().click()
+
+    # methods
+
+
+    def filter_catalogue(self):
+        self.filter_by_price()
+        self.filter_by_size()
