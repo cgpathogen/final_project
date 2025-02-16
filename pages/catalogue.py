@@ -33,6 +33,7 @@ class Catalogue(Base):
 
     smart_filter = ("xpath", "//span[@id='modef']")
     show_results = ("xpath", "//*[@id='modef']/a")
+    close_smart_filter = ("xpath", "//span[@class='smart-filter-controls-popup-close far fa-times']")
 
     ## sort
 
@@ -106,6 +107,10 @@ class Catalogue(Base):
         return self.wait.until(EC.element_to_be_clickable(self.show_results))
 
 
+    def get_close_smart_filter(self):
+        return self.wait.until(EC.element_to_be_clickable(self.close_smart_filter))
+
+
     ## sort
 
 
@@ -174,9 +179,16 @@ class Catalogue(Base):
         self.get_size_2().click()
         self.get_size_3().click()
 
+
+    def final_smart_filter(self):
+        self.get_show_results().click()
+
+
     # methods
 
 
     def filter_catalogue(self):
         self.filter_by_price()
+        self.final_smart_filter()
         self.filter_by_size()
+        self.final_smart_filter()
