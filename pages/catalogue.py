@@ -42,12 +42,10 @@ class Catalogue(Base):
 
     ## items
 
-    item_1 = ("xpath","(//div[@class='catalog-section-item-wrapper'])[1]")
-    item_1_plus = ("xpath", "(//a[@class='intec-ui-part-increment'])[1]")
-    item_1_buy = ("xpath","(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])[1]")
-    item_2 = ("xpath","(//div[@class='catalog-section-item-wrapper'])[2]")
-    item_2_plus = ("xpath", "(//a[@class='intec-ui-part-increment'])[2]")
-    item_2_buy = ("xpath","(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])[2]")
+    item = ("xpath","(//div[@class='catalog-section-item-wrapper'])[1]")
+    item_plus = ("xpath", "(//a[@class='intec-ui-part-increment'])[1]")
+    item_buy = ("xpath","(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])[1]")
+
 
     ## cart
 
