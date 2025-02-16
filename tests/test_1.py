@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
 from pages.main_page import Main_page
+from pages.catalogue import Catalogue
 
 def test_buy_product():
     options = Options()
@@ -20,5 +21,7 @@ def test_buy_product():
     mp.go_to_main_url()
     mp.close_location_popup()
     mp.authorization()
+    catalogue = Catalogue(driver) # catalogue
+    catalogue.filter_by_price()
 
-    time.sleep(3)
+    time.sleep(5)
