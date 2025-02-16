@@ -22,6 +22,6 @@ def test_buy_product():
     mp.close_location_popup()
     mp.authorization()
     catalogue = Catalogue(driver) # catalogue
-    catalogue.filter_by_price()
+    catalogue.filter_catalogue()
 
-    time.sleep(5)
+    time.sleep(3)
