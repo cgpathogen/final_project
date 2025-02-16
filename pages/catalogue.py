@@ -65,11 +65,11 @@ class Catalogue(Base):
 
 
     def get_left_slider(self):
-        return self.wait.until(EC.element_to_be_clickable(self.left_slider))
+        return self.wait.until(EC.visibility_of_element_located(self.left_slider))
 
 
     def get_right_slider(self):
-        return self.wait.until(EC.element_to_be_clickable(self.right_slider))
+        return self.wait.until(EC.visibility_of_element_located(self.right_slider))
 
 
     def get_size_filter(self):
@@ -156,3 +156,14 @@ class Catalogue(Base):
 
     def get_cart_hover_go_to_cart_page(self):
         return self.wait.until(EC.element_to_be_clickable(self.get_cart_hover_go_to_cart_page()))
+
+
+    # methods
+
+
+    ## filters
+
+    def filter_by_price(self):
+        self.get_price_filter().click()
+        self.action.drag_and_drop_by_offset(self.get_left_slider(),50,0).perform()
+        self.action.drag_and_drop_by_offset(self.get_right_slider(),-80,0).perform()
