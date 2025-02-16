@@ -49,3 +49,8 @@ class Catalogue(Base):
 
     ## cart
 
+    cart = ("xpath", "(//div[@class='ns-intec-universe c-sale-basket-small c-sale-basket-small-icons-1'])[1]")
+    cart_hover_field = ("xpath", '//*[@id="i-0-intec-universe-sale-basket-small-icons-1-gnX3eXWafXCe"]')
+    cart_hover_item_text = ("xpath", "//a[@class='sale-basket-small-product-name intec-cl-text-hover']")
+    cart_hover_item_price = ("xpath", "//span[@class='sale-basket-small-product-new-price']")
+    cart_hover_go_to_cart_page = ("xpath", "(//a[@class='sale-basket-small-footer-order-button intec-ui intec-ui-control-button intec-ui-mod-block intec-ui-scheme-current intec-ui-size-2'])[1]")
