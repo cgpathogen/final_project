@@ -1,3 +1,5 @@
+import time
+
 from base.base import Base
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -23,7 +25,10 @@ class Catalogue(Base):
     size_2 = ("xpath", "(//span[@class='smart-filter-property-value-text'])[2]")
     size_3 = ("xpath", "(//span[@class='smart-filter-property-value-text'])[3]")
 
+
+
     ## filter buttons
+
 
     set_filter_btn = ("xpath", "//input[@id='set_filter']")
     reset_filter_btn = ("xpath", "//input[@id='del_filter']")
@@ -32,6 +37,7 @@ class Catalogue(Base):
     ## smart filter
 
     smart_filter = ("xpath", "//span[@id='modef']")
+    smart_filter_amount = ("xpath","//span[@class='smart-filter-controls-popup-text']")
     show_results = ("xpath", "//*[@id='modef']/a")
     close_smart_filter = ("xpath", "//span[@class='smart-filter-controls-popup-close far fa-times']")
 
@@ -89,10 +95,10 @@ class Catalogue(Base):
 
 
     def get_set_filter_btn(self):
-        return self.wait.until(EC.element_to_be_clickable(self.set_filter_btn))
+        return self.wait.until(EC.visibility_of_element_located(self.set_filter_btn))
 
 
-    def get_reset_filter_btn(self):
+    def get_reset_filter_btn(self): # optional
         return self.wait.until(EC.element_to_be_clickable(self.reset_filter_btn))
 
 
@@ -101,6 +107,10 @@ class Catalogue(Base):
 
     def get_smart_filter(self):
        return self.wait.until(EC.visibility_of_element_located(self.smart_filter))
+
+
+    def get_smart_filter_amount(self):
+        return self.wait.until(EC.visibility_of_element_located(self.smart_filter_amount))
 
 
     def get_show_results(self):
@@ -180,7 +190,7 @@ class Catalogue(Base):
         self.get_size_3().click()
 
 
-    def final_smart_filter(self):
+    def final_smart_filter(self): # optional
         self.get_show_results().click()
 
 
@@ -189,6 +199,8 @@ class Catalogue(Base):
 
     def filter_catalogue(self):
         self.filter_by_price()
-        self.final_smart_filter()
+        self.get_close_smart_filter().click()
         self.filter_by_size()
-        self.final_smart_filter()
+        time.sleep(3)
+        self.driver.execute_script("window.scrollTo(0, 500)")
+        self.get_set_filter_btn().click()
