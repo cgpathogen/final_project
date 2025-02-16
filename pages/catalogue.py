@@ -201,6 +201,6 @@ class Catalogue(Base):
         self.filter_by_price()
         self.get_close_smart_filter().click()
         self.filter_by_size()
-        time.sleep(3)
+        time.sleep(3) # to skip smart filter
         self.driver.execute_script("window.scrollTo(0, 500)")
         self.get_set_filter_btn().click()
