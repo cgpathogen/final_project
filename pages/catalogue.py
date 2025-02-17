@@ -237,7 +237,7 @@ class Catalogue(Base):
 
     def add_items_to_cart(self):
         self.action.move_to_element(self.get_item()).click(self.get_item_plus()).click(self.get_item_buy()).perform()
-        self.action.move_to_element(self.get_item_2()).click(self.get_item_2_plus()).click(self.get_item_2_buy()).perform()
+        self.action.move_to_element(self.get_item_2()).click(self.get_item_2_buy()).perform()
 
 
     ## cart
@@ -256,6 +256,7 @@ class Catalogue(Base):
 
 
     def filter_catalogue(self):
+        self.get_current_url()
         self.filter_by_price()
         self.get_close_smart_filter().click()
         self.filter_by_size()
