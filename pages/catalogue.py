@@ -210,16 +210,19 @@ class Catalogue(Base):
         self.get_price_filter().click()
         self.action.drag_and_drop_by_offset(self.get_left_slider(),50,0).perform()
         self.action.drag_and_drop_by_offset(self.get_right_slider(),-80,0).perform()
+        print("filtered by price")
 
 
     def filter_by_size(self):
         self.get_size_filter().click()
         self.get_size_2().click()
         self.get_size_3().click()
+        print("filtered by size")
 
 
     def final_smart_filter(self): # optional
         self.get_show_results().click()
+        print("smartly filtered")
 
 
     ## sort
@@ -229,6 +232,7 @@ class Catalogue(Base):
         self.get_sort_btn().click()
         self.wait.until(EC.visibility_of_element_located(self.sort_options_block))
         self.wait.until(EC.element_to_be_clickable(self.sort_option)).click()
+        print("sorted by price ascending")
 
 
 
@@ -238,6 +242,7 @@ class Catalogue(Base):
     def add_items_to_cart(self):
         self.action.move_to_element(self.get_item()).click(self.get_item_plus()).click(self.get_item_buy()).perform()
         self.action.move_to_element(self.get_item_2()).click(self.get_item_2_buy()).perform()
+        print("items were added to cart")
 
 
     ## cart
