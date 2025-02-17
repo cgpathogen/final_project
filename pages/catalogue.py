@@ -57,6 +57,10 @@ class Catalogue(Base):
     item_buy = ("xpath","(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])[1]")
     item_2_buy = ("xpath",
                 "(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])[2]")
+    item_text = ("xpath", "(//a[@class='section-item-name intec-cl-text-hover'])[1]")
+    item_2_text = ("xpath", "(//a[@class='section-item-name intec-cl-text-hover'])[2]")
+    item_price = ("xpath", "(//span[@data-role='item.price.discount'])[1]")
+    item_2_price = ("xpath", "(//span[@data-role='item.price.discount'])[2]")
 
 
     ## cart
@@ -170,6 +174,24 @@ class Catalogue(Base):
         return self.wait.until(EC.element_to_be_clickable(self.item_2_buy))
 
 
+    def get_item_text(self):
+        return self.wait.until(EC.visibility_of_element_located(self.item_text))
+
+
+    def get_item_2_text(self):
+        return self.wait.until(EC.visibility_of_element_located(self.item_2_text))
+
+
+    def get_item_price(self):
+        return self.wait.until(EC.visibility_of_element_located(self.item_price))
+
+
+    def get_item_2_price(self):
+        return self.wait.until(EC.visibility_of_element_located(self.item_2_price))
+
+
+
+
     ## cart
 
 
@@ -250,12 +272,10 @@ class Catalogue(Base):
     def pre_cart(self):
         self.action.move_to_element(self.get_cart()).perform()
         self.action.move_to_element(self.get_cart_hover_filed())
-        print(self.get_cart_hover_item_text().text)
-        print(self.get_cart_hover_item_price().text)
-        print(self.get_cart_hover_item_text_2().text)
-        print(self.get_cart_hover_item_price_2().text)
-
-
+        assert self.get_item_text().text == self.get_cart_hover_item_text().text
+        assert self.get_item_2_text().text == self.get_cart_hover_item_text_2().text
+        # assert self.get_item_price().text == self.get_cart_hover_item_price().text
+        # assert self.get_item_2_price().text == self.get_cart_hover_item_price_2().text
 
     # methods
 
