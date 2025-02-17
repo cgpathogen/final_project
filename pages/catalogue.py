@@ -261,7 +261,6 @@ class Catalogue(Base):
         print("sorted by price ascending")
 
 
-
     ## add items to cart
 
 
