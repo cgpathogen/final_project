@@ -72,7 +72,7 @@ class Catalogue(Base):
     cart_hover_item_text_2 = ("xpath", "(//a[@class='sale-basket-small-product-name intec-cl-text-hover'])[2]")
     cart_hover_item_price_2 = ("xpath", "(//span[@class='sale-basket-small-product-new-price'])[2]")
     cart_hover_go_to_cart_page = ("xpath", "(//a[@class='sale-basket-small-footer-order-button intec-ui intec-ui-control-button intec-ui-mod-block intec-ui-scheme-current intec-ui-size-2'])[1]")
-
+    hover_cart_total_price = ("xpath","//span[@class='sale-basket-small-footer-new-sum']")
 
     # getters
 
@@ -223,6 +223,10 @@ class Catalogue(Base):
         return self.wait.until(EC.element_to_be_clickable(self.get_cart_hover_go_to_cart_page()))
 
 
+    def get_hover_cart_total_price(self):
+        return self.wait.until(EC.visibility_of_element_located(self.hover_cart_total_price))
+
+
     # actions
 
 
@@ -272,10 +276,19 @@ class Catalogue(Base):
     def pre_cart(self):
         self.action.move_to_element(self.get_cart()).perform()
         self.action.move_to_element(self.get_cart_hover_filed())
+
+        price_1 = float(self.get_item_price().text.split(" ")[0])*2 # price of item from search results * 2
+        price_2 = float(self.get_cart_hover_item_price().text.split(" ")[0]) # price of item from cart pop-up
+        price_3 = float(self.get_item_2_price().text.split(" ")[0]) # price of the second item from search results
+        price_4 = float(self.get_cart_hover_item_price_2().text.split(" ")[0]) # price of second item from cart pop-up
+        price_5 = float(self.get_hover_cart_total_price().text.split(" ")[0]) # total price
+
         assert self.get_item_text().text == self.get_cart_hover_item_text().text
         assert self.get_item_2_text().text == self.get_cart_hover_item_text_2().text
-        assert round(float(self.get_item_price().text.split(" ")[0]))*2 == round(float(self.get_cart_hover_item_price().text.split(" ")[0]))
-        assert self.get_item_2_price().text == self.get_cart_hover_item_price_2().text
+        assert price_1 == price_2
+        assert price_3 == price_4
+        assert price_1 + price_3 == price_5
+        print("prices match")
 
     # methods
 
