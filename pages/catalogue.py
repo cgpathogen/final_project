@@ -47,23 +47,31 @@ class Catalogue(Base):
     sort_options_block = ("xpath", "//div[@class='catalog-panel-sort-items']")
     sort_option = ("xpath", "(//div[@class='catalog-panel-sort-item'])[5]")
 
+
     ## items
 
-    item = ("xpath","(//div[@class='catalog-section-item-wrapper'])")
+    item = ("xpath","(//div[@class='catalog-section-item-wrapper'])[1]")
+    item_2 = ("xpath", "(//div[@class='catalog-section-item-wrapper'])[1]")
     item_plus = ("xpath", "(//a[@class='intec-ui-part-increment'])")
-    item_buy = ("xpath","(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])")
+    item_2_plus = ("xpath", "(//a[@class='intec-ui-part-increment'])[2]")
+    item_buy = ("xpath","(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])[1]")
+    item_2_buy = ("xpath",
+                "(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])[2]")
 
 
     ## cart
 
     cart = ("xpath", "(//div[@class='ns-intec-universe c-sale-basket-small c-sale-basket-small-icons-1'])[1]")
-    cart_hover_field = ("xpath", '//*[@id="i-0-intec-universe-sale-basket-small-icons-1-gnX3eXWafXCe"]')
-    cart_hover_item_text = ("xpath", "//a[@class='sale-basket-small-product-name intec-cl-text-hover']")
-    cart_hover_item_price = ("xpath", "//span[@class='sale-basket-small-product-new-price']")
+    cart_hover_field = ("xpath", '(//div[@class="sale-basket-small-popup sale-basket-small-popup-basket"])[1]')
+    cart_hover_item_text = ("xpath", "(//a[@class='sale-basket-small-product-name intec-cl-text-hover'])[1]")
+    cart_hover_item_price = ("xpath", "(//span[@class='sale-basket-small-product-new-price'])[1]")
+    cart_hover_item_text_2 = ("xpath", "(//a[@class='sale-basket-small-product-name intec-cl-text-hover'])[2]")
+    cart_hover_item_price_2 = ("xpath", "(//span[@class='sale-basket-small-product-new-price'])[2]")
     cart_hover_go_to_cart_page = ("xpath", "(//a[@class='sale-basket-small-footer-order-button intec-ui intec-ui-control-button intec-ui-mod-block intec-ui-scheme-current intec-ui-size-2'])[1]")
 
 
     # getters
+
 
     ## filters
 
@@ -136,7 +144,7 @@ class Catalogue(Base):
         return self.wait.until(EC.element_to_be_clickable(self.sort_option))
 
 
-    ## itmes
+    ## items
 
     def get_item(self):
         return self.wait.until(EC.element_to_be_clickable(self.item))
@@ -148,6 +156,18 @@ class Catalogue(Base):
 
     def get_item_buy(self):
         return self.wait.until(EC.element_to_be_clickable(self.item_buy))
+
+
+    def get_item_2(self):
+        return self.wait.until(EC.element_to_be_clickable(self.item_2))
+
+
+    def get_item_2_plus(self):
+        return self.wait.until(EC.element_to_be_clickable(self.item_2_plus))
+
+
+    def get_item_2_buy(self):
+        return self.wait.until(EC.element_to_be_clickable(self.item_2_buy))
 
 
     ## cart
@@ -167,6 +187,14 @@ class Catalogue(Base):
 
     def get_cart_hover_item_price(self):
         return self.wait.until(EC.visibility_of_element_located(self.cart_hover_item_price))
+
+
+    def get_cart_hover_item_text_2(self):
+        return self.wait.until(EC.visibility_of_element_located(self.cart_hover_item_text_2))
+
+
+    def get_cart_hover_item_price_2(self):
+        return self.wait.until(EC.visibility_of_element_located(self.cart_hover_item_price_2))
 
 
     def get_cart_hover_go_to_cart_page(self):
@@ -203,6 +231,27 @@ class Catalogue(Base):
         self.wait.until(EC.element_to_be_clickable(self.sort_option)).click()
 
 
+
+    ## add items to cart
+
+
+    def add_items_to_cart(self):
+        self.action.move_to_element(self.get_item()).click(self.get_item_plus()).click(self.get_item_buy()).perform()
+        self.action.move_to_element(self.get_item_2()).click(self.get_item_2_plus()).click(self.get_item_2_buy()).perform()
+
+
+    ## cart
+
+    def pre_cart(self):
+        self.action.move_to_element(self.get_cart()).perform()
+        self.action.move_to_element(self.get_cart_hover_filed())
+        print(self.get_cart_hover_item_text().text)
+        print(self.get_cart_hover_item_price().text)
+        print(self.get_cart_hover_item_text_2().text)
+        print(self.get_cart_hover_item_price_2().text)
+
+
+
     # methods
 
 
@@ -214,3 +263,6 @@ class Catalogue(Base):
         self.driver.execute_script("window.scrollTo(0, 500)")
         self.get_set_filter_btn().click()
         self.sort_by_ascending()
+        self.driver.execute_script("window.scrollTo(0, 500)")
+        self.add_items_to_cart()
+        self.pre_cart()
