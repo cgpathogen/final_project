@@ -274,13 +274,13 @@ class Catalogue(Base):
         self.action.move_to_element(self.get_cart_hover_filed())
         assert self.get_item_text().text == self.get_cart_hover_item_text().text
         assert self.get_item_2_text().text == self.get_cart_hover_item_text_2().text
-        # assert self.get_item_price().text == self.get_cart_hover_item_price().text
-        # assert self.get_item_2_price().text == self.get_cart_hover_item_price_2().text
+        assert round(float(self.get_item_price().text.split(" ")[0]))*2 == round(float(self.get_cart_hover_item_price().text.split(" ")[0]))
+        assert self.get_item_2_price().text == self.get_cart_hover_item_price_2().text
 
     # methods
 
 
-    def filter_catalogue(self):
+    def filter_catalogue_and_add_to_cart(self):
         self.get_current_url()
         self.filter_by_price()
         self.get_close_smart_filter().click()
