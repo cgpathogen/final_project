@@ -220,7 +220,7 @@ class Catalogue(Base):
 
 
     def get_cart_hover_go_to_cart_page(self):
-        return self.wait.until(EC.element_to_be_clickable(self.get_cart_hover_go_to_cart_page()))
+        return self.wait.until(EC.element_to_be_clickable(self.cart_hover_go_to_cart_page))
 
 
     def get_hover_cart_total_price(self):
@@ -288,6 +288,7 @@ class Catalogue(Base):
         assert price_3 == price_4
         assert price_1 + price_3 == price_5
         print("prices match")
+        self.get_cart_hover_go_to_cart_page().click()
 
     # methods
 
