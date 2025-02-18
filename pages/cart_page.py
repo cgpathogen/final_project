@@ -14,10 +14,12 @@ class Cart_page(Base):
 
     # xpath locators
 
+
     place_order_btn = ("xpath","//button[@class='basket-order-button intec-ui intec-ui-control-button intec-ui-mod-round-2 intec-ui-scheme-current intec-ui-mod-block intec-ui-size-2']")
 
 
     # getters
+
 
     def get_place_order_btn(self):
         return self.wait.until(EC.element_to_be_clickable(self.place_order_btn))
@@ -27,5 +29,7 @@ class Cart_page(Base):
 
 
     def place_order(self):
+        self.get_current_url()
         self.scroll_page_with_500px()
         self.get_place_order_btn().click()
+        print("start placing the order")
