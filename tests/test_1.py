@@ -5,9 +5,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
-from pages.cart_page import Cart_page
 from pages.main_page import Main_page
 from pages.catalogue import Catalogue
+from pages.cart_page import Cart_page
 
 def test_buy_product():
     options = Options()
@@ -24,8 +24,7 @@ def test_buy_product():
     mp.authorization()
     catalogue = Catalogue(driver) # catalogue
     catalogue.filter_catalogue_and_add_to_cart()
-    cp = Cart_page(driver) # cart page
-    cp.get_data()
+    cp = Cart_page(driver)
 
 
     time.sleep(3)
