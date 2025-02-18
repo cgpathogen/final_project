@@ -299,9 +299,9 @@ class Catalogue(Base):
         self.get_close_smart_filter().click()
         self.filter_by_size()
         time.sleep(3) # to skip smart filter
-        self.driver.execute_script("window.scrollTo(0, 500)")
+        self.scroll_page_with_500px()
         self.get_set_filter_btn().click()
         self.sort_by_ascending()
-        self.driver.execute_script("window.scrollTo(0, 500)")
+        self.scroll_page_with_500px()
         self.add_items_to_cart()
         self.pre_cart()
