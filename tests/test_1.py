@@ -25,6 +25,7 @@ def test_buy_product():
     catalogue = Catalogue(driver) # catalogue
     catalogue.filter_catalogue_and_add_to_cart()
     cp = Cart_page(driver)
+    cp.place_order()
 
 
     time.sleep(3)
