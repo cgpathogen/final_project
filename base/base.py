@@ -15,3 +15,7 @@ class Base:
 
     def get_current_url(self):
         print(f"\nCurrent URL: {self.driver.current_url}")
+
+
+    def scroll_page_with_500px(self):
+        self.driver.execute_script("window.scrollTo(0, 500)")
