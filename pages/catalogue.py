@@ -11,6 +11,9 @@ class Catalogue(Base):
         super().__init__(driver)
         self.wait = WebDriverWait(self.driver, 10, poll_frequency=1)
         self.action = ActionChains(self.driver)
+        self.price_1 = None
+        self.price_3 = None
+        self.price_5 = None
 
 
     # x-path locators:
@@ -287,6 +290,10 @@ class Catalogue(Base):
         assert price_1 + price_3 == price_5
         print("prices match")
         self.get_cart_hover_go_to_cart_page().click()
+
+        self.price_1 = price_1
+        self.price_3 = price_3
+        self.price_5 = price_5
 
     # methods
 
