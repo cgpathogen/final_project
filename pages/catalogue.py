@@ -190,8 +190,6 @@ class Catalogue(Base):
         return self.wait.until(EC.visibility_of_element_located(self.item_2_price))
 
 
-
-
     ## cart
 
 
