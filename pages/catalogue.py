@@ -1,6 +1,7 @@
 import time
 
 from base.base import Base
+from base.state import catalog_price_1, catalog_price_2, catalog_price_3, catalog_price_4, catalog_price_5
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
@@ -271,22 +272,26 @@ class Catalogue(Base):
     ## cart
 
     def pre_cart(self):
+        global catalog_price_1,catalog_price_3,catalog_price_5
+
         self.action.move_to_element(self.get_cart()).perform()
         self.action.move_to_element(self.get_cart_hover_filed())
 
-        price_1 = float(self.get_item_price().text.split(" ")[0])*2 # price of item from search results * 2
-        price_2 = float(self.get_cart_hover_item_price().text.split(" ")[0]) # price of item from cart pop-up
-        price_3 = float(self.get_item_2_price().text.split(" ")[0]) # price of the second item from search results
-        price_4 = float(self.get_cart_hover_item_price_2().text.split(" ")[0]) # price of second item from cart pop-up
-        price_5 = float(self.get_hover_cart_total_price().text.split(" ")[0]) # total price
+        catalog_price_1 = float(self.get_item_price().text.split(" ")[0]) * 2 # price of item from search results * 2
+        catalog_price_2 = float(self.get_cart_hover_item_price().text.split(" ")[0]) # price of item from cart pop-up
+        catalog_price_3 = float(self.get_item_2_price().text.split(" ")[0]) # price of the second item from search results
+        catalog_price_4 = float(self.get_cart_hover_item_price_2().text.split(" ")[0]) # price of second item from cart pop-up
+        catalog_price_5 = float(self.get_hover_cart_total_price().text.split(" ")[0]) # total price
 
         assert self.get_item_text().text == self.get_cart_hover_item_text().text
         assert self.get_item_2_text().text == self.get_cart_hover_item_text_2().text
-        assert price_1 == price_2
-        assert price_3 == price_4
-        assert price_1 + price_3 == price_5
+        assert catalog_price_1 == catalog_price_2
+        assert catalog_price_3 == catalog_price_4
+        assert catalog_price_1 + catalog_price_3 == catalog_price_5
         print("prices match")
         self.get_cart_hover_go_to_cart_page().click()
+
+        return catalog_price_1,catalog_price_2,catalog_price_3,catalog_price_4,catalog_price_5
 
 
     # methods
