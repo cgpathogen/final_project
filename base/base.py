@@ -23,12 +23,12 @@ class Base:
         self.driver.execute_script("window.scrollTo(0, 500)")
 
 
-    def create_txt_price_1(self, price_1):
-        with open(f"prices/price_1.txt", "w") as file:
-            file.write(price_1)
+    def create_txt_price(self, price, index):
+        with open(f"prices/price_{index}.txt", "w") as file:
+            file.write(price)
 
 
-    def read_price_1(self):
-        with open(f"prices/price_1.txt", "r") as file:
+    def read_price(self, index):
+        with open(f"prices/price_{index}.txt", "r") as file:
             f = file.read()
             print(float(f.split(" ")[0]))
