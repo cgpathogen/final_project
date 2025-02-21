@@ -1,3 +1,5 @@
+import os
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -19,3 +21,14 @@ class Base:
 
     def scroll_page_with_500px(self):
         self.driver.execute_script("window.scrollTo(0, 500)")
+
+
+    def create_txt_price_1(self, price_1):
+        with open(f"prices/price_1.txt", "w") as file:
+            file.write(price_1)
+
+
+    def read_price_1(self):
+        with open(f"prices/price_1.txt", "r") as file:
+            f = file.read()
+            print(float(f.split(" ")[0]))
