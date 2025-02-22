@@ -32,3 +32,14 @@ class Base:
         with open(f"prices/price_{index}.txt", "r") as file:
             f = file.read()
             return float(f.split(" ")[0])
+
+
+    def create_txt_name(self, name, index):
+        with open(f"names/name_{index}.txt", "w") as file:
+            file.write(name)
+
+
+    def read_name(self,index):
+        with open(f"names/name_{index}.txt", "r") as file:
+            f = file.read()
+            return f
