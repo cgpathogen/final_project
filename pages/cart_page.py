@@ -62,6 +62,10 @@ class Cart_page(Base):
     def compare(self):
         float_price_1 = float(self.get_added_cart_item_price().text.split(" ")[0])
         float_price_3 = float(self.get_added_cart_item_price_2().text.split(" ")[0])
+        # assert names
+        assert self.read_name(1) == self.get_added_cart_item_name().text
+        assert self.read_name(2) == self.get_added_cart_item_2_name().text
+        # assert prices
         assert self.read_price(1) * 2 == float_price_1 # 1st item price
         assert self.read_price(3) == float_price_3 # 3rd item price
         assert self.read_price(5) == float_price_1 + float_price_3 # total price
