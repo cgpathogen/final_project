@@ -67,6 +67,7 @@ class Cart_page(Base):
         assert self.read_price(1) * 2 == float_price_1 # 1st item price
         assert self.read_price(3) == float_price_3 # 3rd item price
         assert self.read_price(5) == float_price_1 + float_price_3 # total price
+        print("Assertion completed")
 
 
     # methods
