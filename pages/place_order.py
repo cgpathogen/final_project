@@ -61,3 +61,97 @@ class Place_order(Base):
     item_2_name = ("xpath", "(//div[@class='bx-soa-item-title']/a)[2]")
     item_2_price = ("xpath", "(//div[@class='bx-soa-item-td-text'])[7]")
     item_2_total_price = ("xpath", "(//div[@class='bx-soa-item-td-text'])[10]")
+
+
+    # getters
+
+
+    ## pay
+
+    def get_pay_by_card(self):
+        self.wait.until(EC.element_to_be_clickable(self.pay_by_card))
+
+
+    def get_pay_in_cash(self):
+        self.wait.until(EC.element_to_be_clickable(self.pay_in_cash))
+
+
+    ## text fields
+
+
+    def get_name_input(self):
+        self.wait.until(EC.element_to_be_clickable(self.name_input))
+
+
+    def get_email_input(self):
+        self.wait.until(EC.element_to_be_clickable(self.email_input))
+
+
+    def get_phone_input(self):
+        self.wait.until(EC.element_to_be_clickable(self.phone_input))
+
+
+    def get_call_operator_to_confirm(self):
+        self.wait.until(EC.element_to_be_clickable(self.call_operator_to_confirm))
+
+
+    def get_calendar_input(self):
+        self.wait.until(EC.element_to_be_clickable(self.calendar_input))
+
+
+    ### calendar
+
+
+    def get_calendar(self):
+        self.wait.until(EC.visibility_of_element_located(self.calendar))
+
+
+    def get_td_day(self):
+        self.wait.until(EC.visibility_of_element_located(self.td_day))
+
+
+    ### delivery hours
+
+
+    def get_delivery_hours_dropdown(self):
+        self.wait.until(EC.element_to_be_clickable(self.delivery_hours_dropdown))
+
+
+    ## total
+
+
+    def get_total_1(self):
+        self.wait.until(EC.visibility_of_element_located(self.total_1))
+
+
+    def get_total_2(self):
+        self.wait.until(EC.visibility_of_element_located(self.total_2))
+
+
+    def get_discount(self):
+        self.wait.until(EC.visibility_of_element_located(self.discount))
+
+
+    ## goods list
+
+
+    def get_item_1_name(self):
+        self.wait.until(EC.visibility_of_element_located(self.item_1_name))
+
+
+    def get_item_1_price(self):
+        self.wait.until(EC.visibility_of_element_located(self.item_1_price))
+
+
+    def get_item_1_total_price(self):
+        self.wait.until(EC.visibility_of_element_located(self.item_1_total_price))
+
+
+    def get_item_2_name(self):
+        self.wait.until(EC.visibility_of_element_located(self.item_2_name))
+
+    def get_item_2_price(self):
+        self.wait.until(EC.visibility_of_element_located(self.item_2_price))
+
+    def get_item_2_total_price(self):
+        self.wait.until(EC.visibility_of_element_located(self.item_2_total_price))
