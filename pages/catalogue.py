@@ -285,6 +285,9 @@ class Catalogue(Base):
         self.create_txt_price(self.get_item_price().text,1)
         self.create_txt_price(self.get_item_2_price().text,3)
         self.create_txt_price(self.get_hover_cart_total_price().text, 5)
+        # turn names into .txt
+        self.create_txt_name(self.get_item_text().text,1)
+        self.create_txt_name(self.get_item_2_text().text, 2)
 
         assert self.get_item_text().text == self.get_cart_hover_item_text().text
         assert self.get_item_2_text().text == self.get_cart_hover_item_text_2().text
