@@ -59,8 +59,12 @@ class Cart_page(Base):
     # actions
 
 
-    def compare_price(self):
-        assert self.read_price(1) * 2 == float(self.get_added_cart_item_price().text.split(" ")[0]) # 1st item price
+    def compare(self):
+        float_price_1 = float(self.get_added_cart_item_price().text.split(" ")[0])
+        float_price_3 = float(self.get_added_cart_item_price_2().text.split(" ")[0])
+        assert self.read_price(1) * 2 == float_price_1 # 1st item price
+        assert self.read_price(3) == float_price_3 # 3rd item price
+        assert self.read_price(5) == float_price_1 + float_price_3 # total price
 
 
 
@@ -69,7 +73,7 @@ class Cart_page(Base):
 
     def place_order(self):
         self.get_current_url()
-        self.compare_price()
+        self.compare()
         self.scroll_page_with_500px()
         self.get_place_order_btn().click()
         print("start placing the order")
