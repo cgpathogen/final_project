@@ -31,4 +31,4 @@ class Base:
     def read_price(self, index):
         with open(f"prices/price_{index}.txt", "r") as file:
             f = file.read()
-            print(float(f.split(" ")[0]))
+            return float(f.split(" ")[0])
