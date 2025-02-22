@@ -150,8 +150,10 @@ class Place_order(Base):
     def get_item_2_name(self):
         self.wait.until(EC.visibility_of_element_located(self.item_2_name))
 
+
     def get_item_2_price(self):
         self.wait.until(EC.visibility_of_element_located(self.item_2_price))
+
 
     def get_item_2_total_price(self):
         self.wait.until(EC.visibility_of_element_located(self.item_2_total_price))
