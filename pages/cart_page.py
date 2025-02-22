@@ -45,7 +45,7 @@ class Cart_page(Base):
 
 
     def get_added_item_count(self):
-        return self.wait.until(EC.element_to_be_clickable(self.added_item_count))
+        return self.wait.until(EC.visibility_of_element_located(self.added_item_count))
 
 
     def get_added_item_2_count(self):
@@ -59,8 +59,17 @@ class Cart_page(Base):
     # actions
 
 
+    def compare_price(self):
+        assert self.read_price(1) * 2 == float(self.get_added_cart_item_price().text.split(" ")[0]) # 1st item price
+
+
+
+    # methods
+
+
     def place_order(self):
         self.get_current_url()
+        self.compare_price()
         self.scroll_page_with_500px()
         self.get_place_order_btn().click()
         print("start placing the order")
