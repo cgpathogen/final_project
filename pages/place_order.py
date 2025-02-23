@@ -171,6 +171,8 @@ class Place_order(Base):
 
     # actions
 
+    ## total
+
 
     def compare_total_order_price(self):
         total_order_price = float(self.get_total_1().text.split(" ")[0])
@@ -178,6 +180,12 @@ class Place_order(Base):
         assert self.read_price(5) == total_order_price
         assert self.read_price(5) == total_order_price_2
         print("total order price match")
+
+
+    def compare_goods_list_name(self):
+        assert self.read_name(1) == self.get_item_1_name().text
+        assert self.read_name(2) == self.get_item_2_name().text
+
 
 
     ## text fields
@@ -233,3 +241,4 @@ class Place_order(Base):
         self.enter_name()
         self.enter_email()
         self.enter_phone()
+        self.compare_goods_list_name()
