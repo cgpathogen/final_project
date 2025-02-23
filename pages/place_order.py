@@ -1,9 +1,11 @@
+import time
 from datetime import datetime
 from base.base import Base
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.select import Select
+from selenium.webdriver import Keys
 
 
 class Place_order(Base):
@@ -12,6 +14,14 @@ class Place_order(Base):
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 10, poll_frequency=1)
         self.action = ActionChains(self.driver)
+
+
+    # user data
+
+
+    user_name = "Tester"
+    user_email = "acrocanthbm@gmail.com"
+    user_phone = "9270001122"
 
 
     # xpaths
@@ -69,91 +79,142 @@ class Place_order(Base):
     ## pay
 
     def get_pay_by_card(self):
-        self.wait.until(EC.element_to_be_clickable(self.pay_by_card))
+        return self.wait.until(EC.element_to_be_clickable(self.pay_by_card))
 
 
     def get_pay_in_cash(self):
-        self.wait.until(EC.element_to_be_clickable(self.pay_in_cash))
+        return self.wait.until(EC.element_to_be_clickable(self.pay_in_cash))
 
 
     ## text fields
 
 
     def get_name_input(self):
-        self.wait.until(EC.element_to_be_clickable(self.name_input))
+        return self.wait.until(EC.element_to_be_clickable(self.name_input))
 
 
     def get_email_input(self):
-        self.wait.until(EC.element_to_be_clickable(self.email_input))
+        return self.wait.until(EC.element_to_be_clickable(self.email_input))
 
 
     def get_phone_input(self):
-        self.wait.until(EC.element_to_be_clickable(self.phone_input))
+        return self.wait.until(EC.element_to_be_clickable(self.phone_input))
 
 
     def get_call_operator_to_confirm(self):
-        self.wait.until(EC.element_to_be_clickable(self.call_operator_to_confirm))
+        return self.wait.until(EC.element_to_be_clickable(self.call_operator_to_confirm))
 
 
     def get_calendar_input(self):
-        self.wait.until(EC.element_to_be_clickable(self.calendar_input))
+        return self.wait.until(EC.element_to_be_clickable(self.calendar_input))
 
 
     ### calendar
 
 
     def get_calendar(self):
-        self.wait.until(EC.visibility_of_element_located(self.calendar))
+        return self.wait.until(EC.visibility_of_element_located(self.calendar))
 
 
     def get_td_day(self):
-        self.wait.until(EC.visibility_of_element_located(self.td_day))
+        return self.wait.until(EC.visibility_of_element_located(self.td_day))
 
 
     ### delivery hours
 
 
     def get_delivery_hours_dropdown(self):
-        self.wait.until(EC.element_to_be_clickable(self.delivery_hours_dropdown))
+        return self.wait.until(EC.element_to_be_clickable(self.delivery_hours_dropdown))
 
 
     ## total
 
 
     def get_total_1(self):
-        self.wait.until(EC.visibility_of_element_located(self.total_1))
+        return self.wait.until(EC.visibility_of_element_located(self.total_1))
 
 
     def get_total_2(self):
-        self.wait.until(EC.visibility_of_element_located(self.total_2))
+        return self.wait.until(EC.visibility_of_element_located(self.total_2))
 
 
     def get_discount(self):
-        self.wait.until(EC.visibility_of_element_located(self.discount))
+        return self.wait.until(EC.visibility_of_element_located(self.discount))
 
 
     ## goods list
 
 
     def get_item_1_name(self):
-        self.wait.until(EC.visibility_of_element_located(self.item_1_name))
+        return self.wait.until(EC.visibility_of_element_located(self.item_1_name))
 
 
     def get_item_1_price(self):
-        self.wait.until(EC.visibility_of_element_located(self.item_1_price))
+        return self.wait.until(EC.visibility_of_element_located(self.item_1_price))
 
 
     def get_item_1_total_price(self):
-        self.wait.until(EC.visibility_of_element_located(self.item_1_total_price))
+        return self.wait.until(EC.visibility_of_element_located(self.item_1_total_price))
 
 
     def get_item_2_name(self):
-        self.wait.until(EC.visibility_of_element_located(self.item_2_name))
+        return self.wait.until(EC.visibility_of_element_located(self.item_2_name))
 
 
     def get_item_2_price(self):
-        self.wait.until(EC.visibility_of_element_located(self.item_2_price))
+        return self.wait.until(EC.visibility_of_element_located(self.item_2_price))
 
 
     def get_item_2_total_price(self):
-        self.wait.until(EC.visibility_of_element_located(self.item_2_total_price))
+        return self.wait.until(EC.visibility_of_element_located(self.item_2_total_price))
+
+
+    # actions
+
+
+    def choose_payment_option(self, option):
+        self.wait.until(EC.element_to_be_clickable(option)).click()
+
+
+    def enter_name(self):
+        self.wait.until(EC.element_to_be_clickable(self.get_name_input())).send_keys(Keys.COMMAND + "A")
+        self.wait.until(EC.element_to_be_clickable(self.get_name_input())).send_keys(self.user_name)
+        self.check_name_is_entered()
+        print("name is entered")
+
+
+    def check_name_is_entered(self):
+        self.wait.until(EC.text_to_be_present_in_element_value(self.name_input,self.user_name))
+
+
+    def enter_email(self):
+        self.wait.until(EC.element_to_be_clickable(self.get_email_input())).send_keys(Keys.COMMAND + "A")
+        self.wait.until(EC.element_to_be_clickable(self.get_email_input())).send_keys(self.user_email)
+        self.check_email_is_entered()
+
+
+    def check_email_is_entered(self):
+        self.wait.until(EC.text_to_be_present_in_element_value(self.email_input,self.user_email))
+
+
+    def enter_phone(self):
+        self.wait.until(EC.element_to_be_clickable(self.get_phone_input())).click()
+        self.wait.until(EC.element_to_be_clickable(self.get_phone_input())).send_keys(self.user_phone)
+        self.check_phone_is_entered()
+
+
+    def check_phone_is_entered(self):
+        edited_phone = f"+7 ({self.user_phone[:3]}) {self.user_phone[3:6]}-{self.user_phone[6:]}"
+        self.wait.until(EC.text_to_be_present_in_element_value(self.phone_input,edited_phone))
+
+
+    # methods
+
+
+    def place_order(self):
+        self.choose_payment_option(self.get_pay_in_cash())
+        time.sleep(3)
+        self.scroll_page_with_500px()
+        self.enter_name()
+        self.enter_email()
+        self.enter_phone()
