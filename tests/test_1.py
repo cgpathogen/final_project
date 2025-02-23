@@ -35,3 +35,4 @@ def test_buy_product():
 
 
     time.sleep(3)
+    driver.quit()
