@@ -172,15 +172,27 @@ class Place_order(Base):
     # actions
 
 
+    def compare_total_order_price(self):
+        total_order_price = float(self.get_total_1().text.split(" ")[0])
+        total_order_price_2 = float(self.get_total_2().text.split(" ")[0])
+        assert self.read_price(5) == total_order_price
+        assert self.read_price(5) == total_order_price_2
+        print("total order price match")
+
+
+    ## text fields
+
+
     def choose_payment_option(self, option):
         self.wait.until(EC.element_to_be_clickable(option)).click()
+        print("payment option was chosen")
 
 
     def enter_name(self):
         self.wait.until(EC.element_to_be_clickable(self.get_name_input())).send_keys(Keys.COMMAND + "A")
         self.wait.until(EC.element_to_be_clickable(self.get_name_input())).send_keys(self.user_name)
         self.check_name_is_entered()
-        print("name is entered")
+        print("name entered")
 
 
     def check_name_is_entered(self):
@@ -191,6 +203,7 @@ class Place_order(Base):
         self.wait.until(EC.element_to_be_clickable(self.get_email_input())).send_keys(Keys.COMMAND + "A")
         self.wait.until(EC.element_to_be_clickable(self.get_email_input())).send_keys(self.user_email)
         self.check_email_is_entered()
+        print("email entered")
 
 
     def check_email_is_entered(self):
@@ -201,6 +214,7 @@ class Place_order(Base):
         self.wait.until(EC.element_to_be_clickable(self.get_phone_input())).click()
         self.wait.until(EC.element_to_be_clickable(self.get_phone_input())).send_keys(self.user_phone)
         self.check_phone_is_entered()
+        print("phone number entered")
 
 
     def check_phone_is_entered(self):
@@ -213,6 +227,7 @@ class Place_order(Base):
 
     def place_order(self):
         self.choose_payment_option(self.get_pay_in_cash())
+        self.compare_total_order_price()
         time.sleep(3)
         self.scroll_page_with_500px()
         self.enter_name()
