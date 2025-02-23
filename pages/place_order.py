@@ -185,7 +185,20 @@ class Place_order(Base):
     def compare_goods_list_name(self):
         assert self.read_name(1) == self.get_item_1_name().text
         assert self.read_name(2) == self.get_item_2_name().text
+        print("goods list names match")
 
+
+    def compare_goods_list_item_price(self):
+        item_list_price_1 = float(self.get_item_1_price().text.split(" ")[0])
+        item_list_total_price_1 = float(self.get_item_1_total_price().text.split(" ")[0])
+        item_list_price_2 = float(self.get_item_2_price().text.split(" ")[0])
+        item_list_total_price_2 = float(self.get_item_2_total_price().text.split(" ")[0])
+
+        assert self.read_price(1) == item_list_price_1
+        assert self.read_price(1)*2 == item_list_total_price_1
+        assert self.read_price(3) == item_list_price_2
+        assert self.read_price(3) == item_list_total_price_2
+        print("goods list prices match")
 
 
     ## text fields
@@ -242,3 +255,4 @@ class Place_order(Base):
         self.enter_email()
         self.enter_phone()
         self.compare_goods_list_name()
+        self.compare_goods_list_item_price()
