@@ -1,5 +1,6 @@
 import time
 from datetime import datetime
+
 from base.base import Base
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -7,12 +8,14 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.select import Select
 from selenium.webdriver import Keys
 
+from selenium.common.exceptions import StaleElementReferenceException
+
 
 class Place_order(Base):
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
-        self.wait = WebDriverWait(self.driver, 10, poll_frequency=1)
+        self.wait = WebDriverWait(self.driver, 10, ignored_exceptions=(StaleElementReferenceException,),poll_frequency=1)
         self.action = ActionChains(self.driver)
 
 
@@ -25,6 +28,12 @@ class Place_order(Base):
 
 
     # xpaths
+
+    ## delivery
+
+
+    take_from_warehouse = ("xpath", "//*[@id='bx-soa-delivery']/div[2]/div[3]/div/div[2]/div[1]")
+
 
     ## pay
 
@@ -43,7 +52,8 @@ class Place_order(Base):
 
     ### calendar
 
-    calendar = ("xpath", "//div[@class='pika-single is-bound left-aligned bottom-aligned']")
+    calendar = ("xpath", '//*[@id="bx-soa-properties"]/div[2]/div[2]/div[1]/div[14]/div')
+    calendar_field = ("xpath", "//div[@class='pika-single is-bound left-aligned bottom-aligned']")
     td_day = ("xpath", f"//td[@data-day='{datetime.today().day+1}']")
 
 
@@ -76,6 +86,13 @@ class Place_order(Base):
     # getters
 
 
+    # delivery
+
+
+    def get_take_from_warehouse(self):
+       return self.wait.until(EC.element_to_be_clickable(self.take_from_warehouse))
+
+
     ## pay
 
     def get_pay_by_card(self):
@@ -90,11 +107,11 @@ class Place_order(Base):
 
 
     def get_name_input(self):
-        return self.wait.until(EC.element_to_be_clickable(self.name_input))
+        return self.wait.until(EC.visibility_of_element_located(self.name_input))
 
 
     def get_email_input(self):
-        return self.wait.until(EC.element_to_be_clickable(self.email_input))
+        return self.wait.until(EC.visibility_of_element_located(self.email_input))
 
 
     def get_phone_input(self):
@@ -114,6 +131,10 @@ class Place_order(Base):
 
     def get_calendar(self):
         return self.wait.until(EC.visibility_of_element_located(self.calendar))
+
+
+    def get_calendar_field(self):
+        return self.wait.until(EC.visibility_of_element_located(self.calendar_field))
 
 
     def get_td_day(self):
@@ -171,6 +192,7 @@ class Place_order(Base):
 
     # actions
 
+
     ## total
 
 
@@ -204,13 +226,19 @@ class Place_order(Base):
     ## text fields
 
 
+    def choose_delivery_option(self,option):
+        self.wait.until(EC.element_to_be_clickable(option)).click()
+        print("delivery option was chosen")
+
+
     def choose_payment_option(self, option):
         self.wait.until(EC.element_to_be_clickable(option)).click()
         print("payment option was chosen")
 
 
     def enter_name(self):
-        self.wait.until(EC.element_to_be_clickable(self.get_name_input())).send_keys(Keys.COMMAND + "A")
+        self.wait.until(EC.element_to_be_clickable(self.get_name_input())).send_keys(Keys.COMMAND + "A" + Keys.BACKSPACE)
+        time.sleep(0.5)
         self.wait.until(EC.element_to_be_clickable(self.get_name_input())).send_keys(self.user_name)
         self.check_name_is_entered()
         print("name entered")
@@ -221,7 +249,8 @@ class Place_order(Base):
 
 
     def enter_email(self):
-        self.wait.until(EC.element_to_be_clickable(self.get_email_input())).send_keys(Keys.COMMAND + "A")
+        self.wait.until(EC.element_to_be_clickable(self.get_email_input())).send_keys(Keys.COMMAND + "A" + Keys.BACKSPACE)
+        time.sleep(0.5)
         self.wait.until(EC.element_to_be_clickable(self.get_email_input())).send_keys(self.user_email)
         self.check_email_is_entered()
         print("email entered")
@@ -243,10 +272,21 @@ class Place_order(Base):
         self.wait.until(EC.text_to_be_present_in_element_value(self.phone_input,edited_phone))
 
 
+    ### delivery hours
+
+
+    def choose_delivery_hours(self):
+        dropdown = Select(self.get_delivery_hours_dropdown())
+        dropdown.select_by_value("t3")
+        print("delivery hours were chosen")
+
+
     # methods
 
 
     def place_order(self):
+        self.get_current_url()
+        # self.choose_delivery_option(self.get_take_from_warehouse())
         self.choose_payment_option(self.get_pay_in_cash())
         self.compare_total_order_price()
         time.sleep(3)
