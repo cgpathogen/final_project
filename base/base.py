@@ -1,5 +1,5 @@
 import os
-
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -9,7 +9,13 @@ class Base:
         self.wait = WebDriverWait(self.driver,10,poll_frequency=1)
         self.action = ActionChains(self.driver)
 
+
     main_url = "https://legendbaikal.ru/"
+    cookie_accept_alert = ("xpath", "//*[@id='nca-cookiesaccept-line-accept-btn']")
+
+
+    def accept_ccokies(self):
+        self.wait.until(EC.visibility_of_element_located(self.cookie_accept_alert)).click()
 
     def go_to_main_url(self):
         self.driver.get(url=self.main_url)
