@@ -8,14 +8,15 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.select import Select
 from selenium.webdriver import Keys
 
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException, ElementClickInterceptedException
 
 
 class Place_order(Base):
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
-        self.wait = WebDriverWait(self.driver, 10, ignored_exceptions=(StaleElementReferenceException,),poll_frequency=1)
+        self.ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
+        self.wait = WebDriverWait(self.driver, 10,poll_frequency=1)
         self.action = ActionChains(self.driver)
 
 
@@ -38,7 +39,7 @@ class Place_order(Base):
     ## pay
 
     pay_by_card = ("xpath", "(//label[@class='intec-ui intec-ui-control-radiobox intec-ui-scheme-current intec-ui-size-2'])[1]")
-    pay_in_cash = ("xpath","(//label[@class='intec-ui intec-ui-control-radiobox intec-ui-scheme-current intec-ui-size-2'])[3]")
+    pay_in_cash = ("xpath","//span[text()='Оплата наличными при получении заказа']")
 
 
     ## text fields
@@ -232,13 +233,16 @@ class Place_order(Base):
 
 
     def choose_payment_option(self, option):
-        self.wait.until(EC.element_to_be_clickable(option)).click()
+        try:
+            self.wait.until(EC.element_to_be_clickable(option)).click()
+        except StaleElementReferenceException:
+            self.wait.until(EC.element_to_be_clickable(option)).click()
         print("payment option was chosen")
 
 
     def enter_name(self):
         self.wait.until(EC.element_to_be_clickable(self.get_name_input())).send_keys(Keys.COMMAND + "A" + Keys.BACKSPACE)
-        time.sleep(0.5)
+        self.wait.until(EC.text_to_be_present_in_element_value(self.name_input,""))
         self.wait.until(EC.element_to_be_clickable(self.get_name_input())).send_keys(self.user_name)
         self.check_name_is_entered()
         print("name entered")
@@ -250,7 +254,7 @@ class Place_order(Base):
 
     def enter_email(self):
         self.wait.until(EC.element_to_be_clickable(self.get_email_input())).send_keys(Keys.COMMAND + "A" + Keys.BACKSPACE)
-        time.sleep(0.5)
+        self.wait.until(EC.text_to_be_present_in_element_value(self.email_input,""))
         self.wait.until(EC.element_to_be_clickable(self.get_email_input())).send_keys(self.user_email)
         self.check_email_is_entered()
         print("email entered")
@@ -261,9 +265,14 @@ class Place_order(Base):
 
 
     def enter_phone(self):
-        self.wait.until(EC.element_to_be_clickable(self.get_phone_input())).click()
-        self.wait.until(EC.element_to_be_clickable(self.get_phone_input())).send_keys(self.user_phone)
-        self.check_phone_is_entered()
+        def enter_phone_number():
+            self.wait.until(EC.element_to_be_clickable(self.get_phone_input())).click()
+            self.wait.until(EC.element_to_be_clickable(self.get_phone_input())).send_keys(self.user_phone)
+            self.check_phone_is_entered()
+        try:
+            enter_phone_number()
+        except ElementClickInterceptedException:
+            enter_phone_number()
         print("phone number entered")
 
 
@@ -286,10 +295,11 @@ class Place_order(Base):
 
     def place_order(self):
         self.get_current_url()
-        # self.choose_delivery_option(self.get_take_from_warehouse())
-        self.choose_payment_option(self.get_pay_in_cash())
-        self.compare_total_order_price()
+        self.choose_delivery_option(self.take_from_warehouse)
         time.sleep(3)
+        self.choose_payment_option(self.pay_in_cash)
+        self.compare_total_order_price()
+        time.sleep(1)
         self.scroll_page_with_500px()
         self.enter_name()
         self.enter_email()
