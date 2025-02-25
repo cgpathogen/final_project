@@ -16,6 +16,7 @@ class Base:
 
     def accept_ccokies(self):
         self.wait.until(EC.visibility_of_element_located(self.cookie_accept_alert)).click()
+        print("cookies accepted")
 
     def go_to_main_url(self):
         self.driver.get(url=self.main_url)
