@@ -302,7 +302,7 @@ class Place_order(Base):
         self.choose_payment_option(self.pay_in_cash)
         self.compare_total_order_price()
         time.sleep(1)
-        self.scroll_page_with_500px()
+        self.scroll_page(500)
         self.enter_name()
         self.enter_email()
         self.enter_phone()
