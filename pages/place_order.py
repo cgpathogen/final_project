@@ -243,6 +243,7 @@ class Place_order(Base):
     def enter_name(self):
         self.wait.until(EC.element_to_be_clickable(self.get_name_input())).send_keys(Keys.COMMAND + "A" + Keys.BACKSPACE)
         self.wait.until(EC.text_to_be_present_in_element_value(self.name_input,""))
+        time.sleep(1)
         self.wait.until(EC.element_to_be_clickable(self.get_name_input())).send_keys(self.user_name)
         self.check_name_is_entered()
         print("name entered")
@@ -255,6 +256,7 @@ class Place_order(Base):
     def enter_email(self):
         self.wait.until(EC.element_to_be_clickable(self.get_email_input())).send_keys(Keys.COMMAND + "A" + Keys.BACKSPACE)
         self.wait.until(EC.text_to_be_present_in_element_value(self.email_input,""))
+        time.sleep(1)
         self.wait.until(EC.element_to_be_clickable(self.get_email_input())).send_keys(self.user_email)
         self.check_email_is_entered()
         print("email entered")
