@@ -26,8 +26,8 @@ class Base:
         print(f"\nCurrent URL: {self.driver.current_url}")
 
 
-    def scroll_page_with_500px(self):
-        self.driver.execute_script("window.scrollTo(0, 500)")
+    def scroll_page(self, amount):
+        self.driver.execute_script(f"window.scrollTo(0, {amount})")
 
 
     def create_txt_price(self, price, index):
