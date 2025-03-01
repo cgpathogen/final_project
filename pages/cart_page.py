@@ -76,6 +76,6 @@ class Cart_page(Base):
     def place_order(self):
         self.get_current_url()
         self.compare()
-        self.scroll_page_with_500px()
+        self.scroll_page(500)
         self.get_place_order_btn().click()
         print("start placing the order")
