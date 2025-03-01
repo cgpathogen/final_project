@@ -51,7 +51,7 @@ class Catalogue(Base):
     ## items
 
     item = ("xpath","(//div[@class='catalog-section-item-wrapper'])[1]")
-    item_2 = ("xpath", "(//div[@class='catalog-section-item-wrapper'])[1]")
+    item_2 = ("xpath", "(//div[@class='catalog-section-item-wrapper'])[2]")
     item_plus = ("xpath", "(//a[@class='intec-ui-part-increment'])")
     item_2_plus = ("xpath", "(//a[@class='intec-ui-part-increment'])[2]")
     item_buy = ("xpath","(//div[@class='intec-ui intec-ui-control-basket-button catalog-section-item-purchase-button catalog-section-item-purchase-button-add intec-cl-background intec-cl-background-light-hover'])[1]")
