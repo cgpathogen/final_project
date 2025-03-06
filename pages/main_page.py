@@ -18,6 +18,7 @@ class Main_page(Base):
 
     # x-path locators:
 
+
     enter_button = ("xpath","//*[@id='i-5-bitrix-system-auth-form-panel-iIjGFB3HxHmm']/div")
     pop_up =  ("xpath", '//*[@id="UniverseComponent"]')
     log_in_field = ("xpath", '//*[@id="USER_LOGIN_2"]')
@@ -44,10 +45,11 @@ class Main_page(Base):
     search_input = ("xpath", "//input[@id='-input-1']")
     search_results_block = ("xpath", "//div[@class='ns-bitrix c-search-title c-search-title-input-1 search-title-results']")
     search_results_right_sub_block = ("xpath", "//div[@class='search-title-additional']")
-    right_block_item = ("xpath", "(//div[@class='catalog-section-item-wrapper'])")
+    right_block_item = ("xpath", "(//div[@class='catalog-section-item-wrapper'])[1]")
 
 
     # getters
+
 
     def get_enter_btn(self):
         return self.wait.until(EC.element_to_be_clickable(self.enter_button))
@@ -107,19 +109,19 @@ class Main_page(Base):
 
 
     def get_search_input(self):
-        self.wait.until(EC.element_to_be_clickable(self.search_input))
+        return self.wait.until(EC.element_to_be_clickable(self.search_input))
 
 
     def get_search_results_block(self):
-        self.wait.until(EC.visibility_of_element_located(self.search_results_block))
+        return self.wait.until(EC.visibility_of_element_located(self.search_results_block))
 
 
     def get_search_results_right_sub_block(self):
-        self.wait.until(EC.visibility_of_element_located(self.search_results_right_sub_block))
+        return self.wait.until(EC.visibility_of_element_located(self.search_results_right_sub_block))
 
 
     def get_right_block_item(self):
-        self.wait.until(EC.visibility_of_element_located(self.right_block_item))
+        return self.wait.until(EC.element_to_be_clickable(self.right_block_item))
 
 
     # actions
@@ -149,6 +151,28 @@ class Main_page(Base):
         assert self.get_pagetitle().text == 'Личный кабинет пользователя'
 
 
+    # search
+
+
+    def enter_search_request(self, request):
+        self.get_search_input().send_keys(request)
+        print(f"search request intered, search request - {request}")
+
+
+    def hover_search_results_block(self):
+        self.action.move_to_element(self.get_search_results_block()).perform()
+        print("hover on search results block")
+
+
+    def hover_and_click_right_block_item(self):
+        self.action.move_to_element(self.get_right_block_item()).pause(1).click(self.get_right_block_item()).perform()
+        print("hover on right block item")
+
+
+    # methods:
+
+
+
     def hover_catalog(self):
         # Ждем, пока элемент каталога станет видимым
         catalog_link = self.wait.until(EC.visibility_of_element_located(self.catalog))
@@ -173,9 +197,6 @@ class Main_page(Base):
         print("Location choosing pop-up was closed")
 
 
-    # methods:
-
-
     def close_location_popup(self): # закрываем модальное окно выбора локации
         self.hide_location_popup()
 
@@ -189,3 +210,9 @@ class Main_page(Base):
         self.click_login_button()
         self.assert_pagetitle_reach()
         self.hover_catalog()
+
+
+    def search_item(self):
+        self.enter_search_request("React")
+        self.hover_search_results_block()
+        self.hover_and_click_right_block_item()
