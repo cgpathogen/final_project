@@ -39,6 +39,13 @@ class Main_page(Base):
     pcb_yes = ("xpath",'//button[@class="regions-select-question-button intec-cl-background intec-cl-background-light-hover"]')
     pcb_no = ("xpath", '//button[@class="regions-select-question-button"]')
 
+    # search
+
+    search_input = ("xpath", "//input[@id='-input-1']")
+    search_results_block = ("xpath", "//div[@class='ns-bitrix c-search-title c-search-title-input-1 search-title-results']")
+    search_results_right_sub_block = ("xpath", "//div[@class='search-title-additional']")
+    right_block_item = ("xpath", "(//div[@class='catalog-section-item-wrapper'])")
+
 
     # getters
 
@@ -94,6 +101,25 @@ class Main_page(Base):
 
     def get_pcb_no(self):
         return self.wait.until(EC.element_to_be_clickable(self.pcb_no))
+
+
+    # search
+
+
+    def get_search_input(self):
+        self.wait.until(EC.element_to_be_clickable(self.search_input))
+
+
+    def get_search_results_block(self):
+        self.wait.until(EC.visibility_of_element_located(self.search_results_block))
+
+
+    def get_search_results_right_sub_block(self):
+        self.wait.until(EC.visibility_of_element_located(self.search_results_right_sub_block))
+
+
+    def get_right_block_item(self):
+        self.wait.until(EC.visibility_of_element_located(self.right_block_item))
 
 
     # actions
