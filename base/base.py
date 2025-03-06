@@ -3,6 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
+
 class Base:
     def __init__(self, driver):
         self.driver = driver
@@ -11,7 +12,13 @@ class Base:
 
 
     main_url = "https://legendbaikal.ru/"
+    main_logo = ("xpath", "//div[@class='widget-container-logotype-wrap intec-grid-item-auto']")
     cookie_accept_alert = ("xpath", "//*[@id='nca-cookiesaccept-line-accept-btn']")
+
+
+    def click_logo(self):
+        self.wait.until(EC.visibility_of_element_located(self.main_logo))
+        print("cliked on main logo")
 
 
     def accept_ccokies(self):
