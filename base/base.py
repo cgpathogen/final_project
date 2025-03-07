@@ -21,7 +21,7 @@ class Base:
         print("cliked on main logo")
 
 
-    def accept_ccokies(self):
+    def accept_cookies(self):
         self.wait.until(EC.visibility_of_element_located(self.cookie_accept_alert)).click()
         print("cookies accepted")
 
