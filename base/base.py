@@ -12,12 +12,12 @@ class Base:
 
 
     main_url = "https://legendbaikal.ru/"
-    main_logo = ("xpath", "//div[@class='widget-container-logotype-wrap intec-grid-item-auto']")
+    main_logo = ("xpath", "//a[@class='widget-container-item widget-container-logotype intec-ui-picture']")
     cookie_accept_alert = ("xpath", "//*[@id='nca-cookiesaccept-line-accept-btn']")
 
 
     def click_logo(self):
-        self.wait.until(EC.visibility_of_element_located(self.main_logo))
+        self.wait.until(EC.visibility_of_element_located(self.main_logo)).click()
         print("cliked on main logo")
 
 
