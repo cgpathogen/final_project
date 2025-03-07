@@ -1,3 +1,5 @@
+from selenium.common import StaleElementReferenceException
+
 from base.base import Base
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -46,6 +48,7 @@ class Main_page(Base):
     search_results_block = ("xpath", "//div[@class='ns-bitrix c-search-title c-search-title-input-1 search-title-results']")
     search_results_right_sub_block = ("xpath", "//div[@class='search-title-additional']")
     right_block_item = ("xpath", "(//div[@class='catalog-section-item-wrapper'])[1]")
+    right_block_item_name = ("xpath", "//div[@class='catalog-section-item-name']")
 
 
     # getters
@@ -124,6 +127,10 @@ class Main_page(Base):
         return self.wait.until(EC.element_to_be_clickable(self.right_block_item))
 
 
+    def get_right_block_item_text(self):
+        return self.wait.until(EC.visibility_of_element_located(self.right_block_item_name))
+
+
     # actions
 
 
@@ -165,7 +172,10 @@ class Main_page(Base):
 
 
     def hover_and_click_right_block_item(self):
-        self.action.move_to_element(self.get_right_block_item()).pause(1).click(self.get_right_block_item()).perform()
+        try:
+            self.action.move_to_element(self.get_right_block_item()).pause(1).click(self.get_right_block_item()).perform()
+        except StaleElementReferenceException:
+            self.action.move_to_element(self.get_right_block_item()).pause(1).click(self.get_right_block_item()).perform()
         print("hover on right block item")
 
 
@@ -215,4 +225,5 @@ class Main_page(Base):
     def search_item(self):
         self.enter_search_request("React")
         self.hover_search_results_block()
+        self.create_txt_name(self.get_right_block_item_text().text,1)
         self.hover_and_click_right_block_item()
