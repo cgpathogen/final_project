@@ -6,7 +6,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
 
-
 class Product_Page(Base):
     def __init__(self,driver):
         super().__init__(driver)
@@ -43,6 +42,33 @@ class Product_Page(Base):
 
     def get_add_to_cart_button(self):
         return self.wait.until(EC.element_to_be_clickable(self.add_to_cart_button))
+
+
+    ## cart
+
+
+    def get_cart(self):
+        return self.wait.until(EC.element_to_be_clickable(self.cart))
+
+
+    def get_cart_hover_filed(self):
+        return self.wait.until(EC.visibility_of_element_located(self.cart_hover_field))
+
+
+    def get_cart_hover_item_text(self):
+        return self.wait.until(EC.visibility_of_element_located(self.cart_hover_item_text))
+
+
+    def get_cart_hover_item_price(self):
+        return self.wait.until(EC.visibility_of_element_located(self.cart_hover_item_price))
+
+
+    def get_cart_hover_go_to_cart_page(self):
+        return self.wait.until(EC.element_to_be_clickable(self.cart_hover_go_to_cart_page))
+
+
+    def get_hover_cart_total_price(self):
+        return self.wait.until(EC.visibility_of_element_located(self.hover_cart_total_price))
 
 
     # actions
