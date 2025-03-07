@@ -1,4 +1,5 @@
 import time
+from itertools import product
 
 from base.base import Base
 from selenium.webdriver.support.ui import WebDriverWait
@@ -26,7 +27,7 @@ class Product_Page(Base):
 
     product_name = ("xpath", "//h1[@id='pagetitle']")
     product_price = ("xpath", "//span[@class='catalog-element-price-current-value']")
-    add_to_cart_button = ("xpath", "catalog-element-buy-container")
+    add_to_cart_button = ("xpath", "(//div[@class='catalog-element-buy-container'])[2]")
 
 
     # getters
@@ -77,3 +78,32 @@ class Product_Page(Base):
     def press_add_to_cart_button(self):
         self.get_add_to_cart_button().click()
         print("add to cart button clicked")
+
+
+    def compare_product_name(self):
+        assert self.read_name(1) == self.get_product_name().text
+
+
+    def fix_product_price(self):
+        self.create_txt_price(self.get_product_price().text, 1)
+
+
+    def pre_cart(self):
+        self.action.move_to_element(self.get_cart()).perform()
+        self.action.move_to_element(self.get_cart_hover_filed()).perform()
+        assert self.read_name(1) == self.get_product_name().text
+        print("item's name and name in cart match")
+        assert self.read_price(1) == float(self.get_hover_cart_total_price().text.split(" ")[0])
+        print("item's price and total price match")
+        self.get_cart_hover_go_to_cart_page().click()
+
+
+    # methods
+
+
+    def add_product_to_cart(self):
+        self.press_add_to_cart_button()
+        self.compare_product_name()
+        self.fix_product_price()
+        self.pre_cart()
+        print("product was successfully added to cart")
