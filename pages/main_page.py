@@ -212,7 +212,7 @@ class Main_page(Base):
 
 
     def authorization(self): # авторизация
-        self.accept_ccokies()
+        self.accept_cookies()
         self.get_current_url()
         self.click_enter_button()
         self.send_login()
