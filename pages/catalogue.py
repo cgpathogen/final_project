@@ -271,8 +271,6 @@ class Catalogue(Base):
     ## cart
 
     def pre_cart(self):
-        global catalog_price_1,catalog_price_3,catalog_price_5
-
         self.action.move_to_element(self.get_cart()).perform()
         self.action.move_to_element(self.get_cart_hover_filed())
 
