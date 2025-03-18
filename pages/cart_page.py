@@ -70,7 +70,23 @@ class Cart_page(Base):
         print("Assertion completed")
 
 
+    def compare_one_item(self):
+        float_price_1 = float(self.get_added_cart_item_price().text.split(" ")[0])
+        # assert names
+        assert self.read_name(1) == self.get_added_cart_item_name().text
+        # assert prices
+        assert self.read_price(1) == float_price_1 # 1st item price
+        print("Assertion completed")
+
+
     # methods
+
+
+    def place_order_for_one_item(self):
+        self.get_current_url()
+        self.compare_one_item()
+        self.get_place_order_btn().click()
+        print("start placing the order")
 
 
     def place_order(self):
