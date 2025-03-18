@@ -22,5 +22,10 @@ def test_buy_product_with_search_request(init_driver):
     pp = Product_Page(init_driver) # product page
     pp.add_product_to_cart()
 
+    cp = Cart_page(init_driver) # cart page
+    cp.place_order_for_one_item()
+
+    # po = Place_order(init_driver) # placing order
+
     time.sleep(3)
     driver.quit()
