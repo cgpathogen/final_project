@@ -68,6 +68,7 @@ class Place_order(Base):
 
 
     total_1 = ("xpath","(//span[@class='bx-soa-cart-d'])[5]")
+    total_1_one_item = ("xpath","(//span[@class='bx-soa-cart-d'])[4]")
     total_2 = ("xpath","(//span[@class='bx-soa-cart-d bx-soa-changeCostSign'])[2]")
     discount = ("xpath", "(//span[@class='bx-soa-cart-d'])[10]")
 
@@ -156,6 +157,10 @@ class Place_order(Base):
         return self.wait.until(EC.visibility_of_element_located(self.total_1))
 
 
+    def get_total_1_one_item(self):
+        return self.wait.until(EC.visibility_of_element_located(self.total_1_one_item))
+
+
     def get_total_2(self):
         return self.wait.until(EC.visibility_of_element_located(self.total_2))
 
@@ -197,6 +202,12 @@ class Place_order(Base):
     ## total
 
 
+    def compare_total_one_item_order_price(self):
+        total_order_price = float(self.get_total_1_one_item().text.split(" ")[0])
+        assert self.read_price(1) == total_order_price
+        print("total order price match")
+
+
     def compare_total_order_price(self):
         total_order_price = float(self.get_total_1().text.split(" ")[0])
         total_order_price_2 = float(self.get_total_2().text.split(" ")[0])
@@ -205,10 +216,25 @@ class Place_order(Base):
         print("total order price match")
 
 
+
+    def compare_goods_one_item_list_name(self):
+        assert self.read_name(1) == self.get_item_1_name().text
+        print("goods list names match")
+
+
     def compare_goods_list_name(self):
         assert self.read_name(1) == self.get_item_1_name().text
         assert self.read_name(2) == self.get_item_2_name().text
         print("goods list names match")
+
+
+    def compare_goods_one_item_list_item_price(self):
+        item_list_price_1 = float(self.get_item_1_price().text.split(" ")[0])
+        item_list_total_price_1 = float(self.get_item_1_total_price().text.split(" ")[0])
+
+        assert self.read_price(1) == item_list_price_1
+        assert self.read_price(1) == item_list_total_price_1
+        print("goods list prices match")
 
 
     def compare_goods_list_item_price(self):
@@ -293,6 +319,21 @@ class Place_order(Base):
 
 
     # methods
+
+
+    def place_order_one_item(self):
+        self.get_current_url()
+        self.choose_delivery_option(self.take_from_warehouse)
+        time.sleep(3)
+        self.choose_payment_option(self.pay_in_cash)
+        self.compare_total_one_item_order_price()
+        time.sleep(1)
+        self.scroll_page(500)
+        self.enter_name()
+        self.enter_email()
+        self.enter_phone()
+        self.compare_goods_one_item_list_name()
+        self.compare_goods_one_item_list_item_price()
 
 
     def place_order(self):
